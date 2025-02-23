@@ -173,13 +173,13 @@ for capec in capec_data:
 # Запись результатов в Excel
 print("Запись в файл...")
 df = pd.DataFrame(data)
-df.to_excel('vulnerabilities_test3.xlsx', index=False)
-print("Данные успешно записаны в файл vulnerabilities_test3.xlsx")
+df.to_excel('BDU_DATA.xlsx', index=False)
+print("Данные успешно записаны в файл BDU_DATA.xlsx")
 
 # Запись CAPEC данных в отдельный файл
 capec_df = pd.DataFrame(capec_data)
-capec_df.to_excel('capec_data.xlsx', index=False)
-print("Данные CAPEC успешно записаны в файл capec_data.xlsx")
+capec_df.to_excel('CAPEC_DATA.xlsx', index=False)
+print("Данные CAPEC успешно записаны в файл CAPEC_DATA.xlsx")
 
 # Вывод времени выполнения
 end_time = time.time()
