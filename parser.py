@@ -151,7 +151,6 @@ async def process_row(row):
                                 'BDU ID': bdu_id,
                                 'Vulnerability Name': vulnerability_name,
                                 'CWE ID': cwe_id if 'cwe_id' in locals() else "Не найдено",
-                                "CWE link": link_cwe if 'link_cwe' in locals() else "Не найдено",
                                 'CAPEC IDs (High)': "\n".join(likelihoods["High"]) if likelihoods["High"] else "Не найдено",
                                 'CAPEC IDs (Medium)': "\n".join(likelihoods["Medium"]) if likelihoods["Medium"] else "Не найдено",
                                 'CAPEC IDs (Low)': "\n".join(likelihoods["Low"]) if likelihoods["Low"] else "Не найдено",
