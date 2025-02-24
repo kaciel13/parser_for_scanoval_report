@@ -150,16 +150,27 @@ async def process_row(row):
                             data.append({
                                 'BDU ID': bdu_id,
                                 'Vulnerability Name': vulnerability_name,
-                                'CWE ID': cwe_id if 'cwe_id' in locals() else "Не найдено",
-                                'CAPEC IDs (High)': "\n".join(likelihoods["High"]) if likelihoods["High"] else "Не найдено",
-                                'CAPEC IDs (Medium)': "\n".join(likelihoods["Medium"]) if likelihoods["Medium"] else "Не найдено",
-                                'CAPEC IDs (Low)': "\n".join(likelihoods["Low"]) if likelihoods["Low"] else "Не найдено",
-                                'CAPEC IDs (Не найден)': "\n".join(likelihoods["Не найден"]) if likelihoods["Не найден"] else "Не найдено",
+                                'CWE ID': cwe_id if 'cwe_id' in locals() else "",
+                                'CAPEC IDs (High)': ", ".join(likelihoods["High"]) if likelihoods["High"] else "",
+                                'CAPEC IDs (Medium)': ", ".join(likelihoods["Medium"]) if likelihoods["Medium"] else "",
+                                'CAPEC IDs (Low)': ", ".join(likelihoods["Low"]) if likelihoods["Low"] else "",
+                                'CAPEC IDs (Не найден)': ", ".join(likelihoods["Не найден"]) if likelihoods["Не найден"] else "",
                             })
 
+
+async def translate_capec_descriptions(capec_data):
+    translator = Translator()
+    translation_tasks = [translator.translate(capec['Description'], dest='ru') for capec in capec_data]
+    translations = await asyncio.gather(*translation_tasks)
+    
+    for capec, translation in zip(capec_data, translations):
+        capec['Description'] = translation.text
+
 async def main():
-    tasks = [process_row(row) for row in rows]  # Обрабатываем все строки
+    tasks = [process_row(row) for row in rows[:5]]  # Обрабатываем все строки
     await asyncio.gather(*tasks)
+
+
 
 # Запуск асинхронного парсера
 asyncio.run(main())
